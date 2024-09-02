@@ -6,7 +6,7 @@ public class BattleGridManager : MonoBehaviour
 {
     public static BattleGridManager instance;
 
-    public Tilemap tilemap; // Добавляем ссылку на Tilemap
+    public Tilemap tilemap;
 
     [SerializeField]
     private Dictionary<Vector2Int, GameObject> entities = new Dictionary<Vector2Int, GameObject>();
@@ -45,13 +45,11 @@ public class BattleGridManager : MonoBehaviour
         return null;
     }
 
-    // Метод для получения тайла на указанной позиции
     public TileBase GetTile(Vector2Int position)
     {
         return tilemap.GetTile(new Vector3Int(position.x, position.y, 0));
     }
 
-    // Метод для получения всех клеток в виде списка
     public List<TileBase> GetAllCellsAsList()
     {
         List<TileBase> cells = new List<TileBase>();

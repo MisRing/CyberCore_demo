@@ -25,8 +25,6 @@ public class CardUI : MonoBehaviour
     public void Awake()
     {
         animator = GetComponent<Animator>();
-
-        //CloseCard(null);
     }
 
     public void SetStats(string name, string cost, string effect, string type)

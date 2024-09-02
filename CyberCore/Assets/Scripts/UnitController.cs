@@ -11,7 +11,7 @@ public class UnitController : MonoBehaviour
 
     public Vector2Int currentGridPosition;
 
-    public float moveSpeed = 5f; // Скорость перемещения
+    public float moveSpeed = 5f;
 
     private Queue<List<Vector3Int>> moveQueue = new Queue<List<Vector3Int>>();
     private bool inPath = false;
@@ -25,7 +25,7 @@ public class UnitController : MonoBehaviour
         BattleGridManager.instance.MoveEntity(currentGridPosition, newPosition, gameObject);
 
         currentGridPosition = newPosition;
-        // Начать плавное перемещение
+
         if(inPath)
             moveQueue.Enqueue(path);
         else
@@ -39,7 +39,7 @@ public class UnitController : MonoBehaviour
                                               gameObject);
 
         currentGridPosition = new Vector2Int(path[path.Count - 1].x, path[path.Count - 1].y);
-        // Начать плавное перемещение
+        
         if (inPath)
             moveQueue.Enqueue(path);
         else
@@ -54,18 +54,14 @@ public class UnitController : MonoBehaviour
         {
             Vector3 nextDot = BattleGridManager.instance.tilemap.CellToWorld(nextCell) + Vector3.up * 0.5f;
 
-            // Пока объект не достигнет целевой позиции
             while (Vector3.Distance(transform.position, nextDot) > 0.01f)
             {
-                // Плавное перемещение объекта к целевой позиции
                 transform.position = Vector3.MoveTowards(transform.position, nextDot, moveSpeed * Time.deltaTime);
 
-                // Ждать до следующего кадра
                 yield return null;
             }
         }
 
-        // Убедиться, что объект точно на целевой позиции
         transform.position = BattleGridManager.instance.tilemap.CellToWorld(path[path.Count - 1]) + Vector3.up * 0.5f;
 
 

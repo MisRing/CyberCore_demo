@@ -9,20 +9,17 @@ public class DeckManager : MonoBehaviour
 {
     public static DeckManager instance;
 
-    // Колоды по типам карт
-    public List<CardData> actionDeck = new List<CardData>(); // Колода для действий
-    public List<CardData> attackDeck = new List<CardData>(); // Колода для атаки
-    public List<CardData> hackDeck = new List<CardData>();   // Колода для взлома
+    public List<CardData> actionDeck = new List<CardData>();
+    public List<CardData> attackDeck = new List<CardData>();
+    public List<CardData> hackDeck = new List<CardData>();
 
-    // Руки по типам карт
-    public List<GameObject> actionHand = new List<GameObject>(); // Рука для действий
-    public List<GameObject> attackHand = new List<GameObject>(); // Рука для атаки
-    public List<GameObject> hackHand = new List<GameObject>();   // Рука для взлома
+    public List<GameObject> actionHand = new List<GameObject>();
+    public List<GameObject> attackHand = new List<GameObject>();
+    public List<GameObject> hackHand = new List<GameObject>();   
 
-    // Слоты по типам карт
-    public List<RectTransform> actionSlots = new List<RectTransform>(); // Слоты для действий
-    public List<RectTransform> attackSlots = new List<RectTransform>(); // Слоты для атаки
-    public List<RectTransform> hackSlots = new List<RectTransform>();   // Слоты для взлома
+    public List<RectTransform> actionSlots = new List<RectTransform>();
+    public List<RectTransform> attackSlots = new List<RectTransform>();
+    public List<RectTransform> hackSlots = new List<RectTransform>();
 
 
     public Transform handPanel;
@@ -34,24 +31,23 @@ public class DeckManager : MonoBehaviour
     private GameObject cardSlot;
 
 
-    public float cardDrawSpeed = 0.5f; // Время для анимации карты
-    public RectTransform deckTransform; // Трансформ колоды для анимации
+    public float cardDrawSpeed = 0.5f;
+    public RectTransform deckTransform;
 
     [SerializeField]
-    public List<CardData> discardPile = new List<CardData>(); // Сброс карт
+    public List<CardData> discardPile = new List<CardData>();
 
     public UnityEvent onDeckChanged;
     public UnityEvent onDiscardChanged;
 
-    public float minYThreshold = 200f; // Минимальная Y-координата для активации карты
-    public float maxYThreshold = 600f; // Максимальная Y-координата для активации карты
+    public float minYThreshold = 200f;
+    public float maxYThreshold = 600f;
 
  
 
     [SerializeField]
     private Button endTurnButton;
 
-    // Вызовите это событие при изменении колод
     public void NotifyDeckChanged()
     {
         onDeckChanged.Invoke();
@@ -141,7 +137,6 @@ public class DeckManager : MonoBehaviour
         StopAllCoroutines();
 
         RoundController.instance.StartEnemyTurn();
-        //StartCoroutine(NewTurnCoroutine());
     }
 
     public IEnumerator NewTurnCoroutine()
@@ -156,7 +151,6 @@ public class DeckManager : MonoBehaviour
         else if (currentBattleStyle == null)
             yield return SetBattleStyle(defaultBattleStyle);
 
-        //DrawCards();
         yield return DrawCardsCoroutine(currentBattleStyle.actionCards, currentBattleStyle.attackCards, currentBattleStyle.hackCards);
         NotifyDiscardChanged();
 
@@ -164,7 +158,6 @@ public class DeckManager : MonoBehaviour
         yield return null;
     }
 
-    // Удаление карты из руки и добавление в сброс
     public void DiscardCard(GameObject card)
     {
         if (card == null) return;
@@ -187,14 +180,13 @@ public class DeckManager : MonoBehaviour
                     card.GetComponent<CardUI>().CloseCard(null);
                     break;
             }
-            discardPile.Add(cardComponent.cardData); // Добавляем карту в сброс
-            Destroy(card); // Удаляем визуальную карту из UI
+            discardPile.Add(cardComponent.cardData);
+            Destroy(card);
         }
 
         NotifyDiscardChanged();
     }
 
-    // Удаление всех карт из руки и добавление их в сброс
     public void DiscardHand()
     {
         List<GameObject> cardsToRemove = new List<GameObject>(actionHand);
@@ -206,9 +198,9 @@ public class DeckManager : MonoBehaviour
             Card cardComponent = card.GetComponent<Card>();
             if (cardComponent != null)
             {
-                discardPile.Add(cardComponent.cardData); // Перемещаем данные карты в сброс
+                discardPile.Add(cardComponent.cardData);
             }
-            Destroy(card); // Удаляем визуальную карту из UI
+            Destroy(card);
         }
 
         actionHand.Clear();
@@ -217,12 +209,6 @@ public class DeckManager : MonoBehaviour
 
         NotifyDiscardChanged();
     }
-
-    // Добор карт в соответствии с текущими параметрами руки
-    //public void DrawCards()
-    //{
-    //    StartCoroutine(DrawCardsCoroutine(currentBattleStyle.actionCards, currentBattleStyle.attackCards, currentBattleStyle.hackCards));
-    //}
 
     private IEnumerator DrawCardsCoroutine(int actionCount, int attackCount, int hackCount)
     {
@@ -243,25 +229,21 @@ public class DeckManager : MonoBehaviour
 
                 GameObject cardGO = Instantiate(cardData.cardPref, slots[drawn]);
 
-                // Получаем компонент EventTrigger
                 EventTrigger eventTrigger = cardGO.GetComponent<EventTrigger>();
 
                 int slotID = drawn;
-                // Создаем новый EventTrigger.Entry для PointerEnter
                 EventTrigger.Entry pointerEnterEntry = new EventTrigger.Entry
                 {
                     eventID = EventTriggerType.PointerEnter
                 };
                 pointerEnterEntry.callback.AddListener((data) => { cardGO.GetComponent<CardUI>().OpenCard((PointerEventData)data); });
 
-                // Создаем новый EventTrigger.Entry для PointerExit
                 EventTrigger.Entry pointerExitEntry = new EventTrigger.Entry
                 {
                     eventID = EventTriggerType.PointerExit
                 };
                 pointerExitEntry.callback.AddListener((data) => { cardGO.GetComponent<CardUI>().CloseCard((PointerEventData)data); });
 
-                // Добавляем события в список
                 eventTrigger.triggers.Add(pointerEnterEntry);
                 eventTrigger.triggers.Add(pointerExitEntry);
 
@@ -282,16 +264,13 @@ public class DeckManager : MonoBehaviour
             }
             else
             {
-                // Перетасовываем сброс в колоду
                 ReshuffleDiscardIntoDeck();
-                // Обновляем ссылку на текущую колоду
-                deck = GetDeckForType(hand); // Перезагружаем ссылку на текущую колоду
-                yield return null; // Даем Unity время обновить состояние
+                deck = GetDeckForType(hand);
+                yield return null;
             }
         }
     }
 
-    // Метод для получения текущей колоды в зависимости от типа карт в руке
     private List<CardData> GetDeckForType(List<GameObject> hand)
     {
         if (hand == actionHand)
@@ -335,7 +314,6 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    // Анимация карты при её доборе
     private IEnumerator AnimateCardDraw(GameObject cardGO)
     {
         RectTransform cardRectTransform = cardGO.GetComponent<RectTransform>();

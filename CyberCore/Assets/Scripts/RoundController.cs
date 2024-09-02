@@ -30,7 +30,7 @@ public class RoundController : MonoBehaviour
     {
         SpawnPlayer();
         SpawnEnemies();
-        //написать все
+        
         round++;
         StartCoroutine(DeckManager.instance.FirstStart());
     }

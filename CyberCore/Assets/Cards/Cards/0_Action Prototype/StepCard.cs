@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
 
 public class StepCard : Card
 {
@@ -22,9 +19,6 @@ public class StepCard : Card
 
     public override void OnDrag(PointerEventData eventData)
     {
-        //base.OnDrag(eventData);
-
-        //UpdateArrow(eventData);
 
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int tilePos = BattleGridManager.instance.tilemap.WorldToCell(worldPos);
@@ -37,13 +31,6 @@ public class StepCard : Card
 
             availableCell = true;
             castCellPos = tilePos;
-
-            //List<Vector3Int> poseList = new List<Vector3Int>()
-            //{
-            //    castCellPos
-            //};
-
-            //GridUIManager.instance.GenerateHightLights(poseList, GridState.Enemy);
         }
         else
         {
@@ -65,16 +52,12 @@ public class StepCard : Card
         TryCast();
 
         GridUIManager.instance.StopTarget();
-
-        //DestroyArrow();
     }
 
     private void TryCast()
     {
         GetComponent<RectTransform>().localPosition = Vector3.zero;
 
-        ////canvasGroup.blocksRaycasts = true;
-        ////base.OnEndDrag(eventData);
 
         if (availableCell)
         {
@@ -94,7 +77,7 @@ public class StepCard : Card
         }
         else
         {
-            cardRectTransform.anchoredPosition = startPosition; // Возвращаем карту в руку
+            cardRectTransform.anchoredPosition = startPosition;
         }
     }
 
@@ -116,7 +99,6 @@ public class StepCard : Card
 
     public override void PlayCard(UnitController player)
     {
-        //// Логика перемещения игрока на выбранную клетку
         player.MoveUnit(new Vector2Int(castCellPos.x, castCellPos.y));
 
         base.PlayCard(player);
