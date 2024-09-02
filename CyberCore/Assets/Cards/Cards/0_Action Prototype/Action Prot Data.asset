@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10a0d47afc208a45b3f91cf884cdbf7, type: 3}
+  m_Name: Action Prot Data
+  m_EditorClassIdentifier: 
+  cardId: 0
+  cardName: Step forward
+  cardCost: 1
+  cardDescription: Moves you 3 tiles forward.
+  cardType: 2
+  cardPref: {fileID: 5675223157491764261, guid: e06d6508d8b7d774da86f1ca18bbbda8, type: 3}
