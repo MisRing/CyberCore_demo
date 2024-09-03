@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 922838fd789dbad438b0c11851cb3ed4, type: 3}
-  m_Color: {r: 1, g: 0.77971077, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.1854794, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,3 +101,4 @@ MonoBehaviour:
   maxHealth: 10
   currentGridPosition: {x: 0, y: 0}
   moveSpeed: 10
+  damageTextPref: {fileID: 4541077784714622170, guid: d739e9e60baaa1a4981b5cacfbe5bb24, type: 3}

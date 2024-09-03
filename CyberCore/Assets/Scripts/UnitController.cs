@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, IDamageable
 {
     [SerializeField, Range(0, 100)]
     private int currentHealth = 10;
@@ -15,6 +17,9 @@ public class UnitController : MonoBehaviour
 
     private Queue<List<Vector3Int>> moveQueue = new Queue<List<Vector3Int>>();
     private bool inPath = false;
+
+    [SerializeField]
+    private GameObject damageTextPref;
 
     public void MoveUnit(Vector2Int newPosition)
     {
@@ -44,6 +49,38 @@ public class UnitController : MonoBehaviour
             moveQueue.Enqueue(path);
         else
             StartCoroutine(MoveToPosition(path));
+    }
+
+    public bool TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        StartCoroutine(DamageAnimation(amount));
+
+        if (currentHealth <= 0)
+            return true;
+        
+        return false;
+    }
+
+    private IEnumerator DamageAnimation(int amount)
+    {
+        GameObject damageText = Instantiate(damageTextPref, transform);
+        TMP_Text text = damageText.GetComponent<TMP_Text>();
+
+        damageText.transform.localPosition += Vector3.up + Vector3.right * Random.Range(-0.3f, 0.3f);
+
+        text.text = "-" + amount.ToString();
+
+        Vector3 endPosition = damageText.transform.localPosition + Vector3.up * 2;
+
+        while (Vector3.Distance(damageText.transform.localPosition, endPosition) > 0.01f)
+        {
+            damageText.transform.localPosition = Vector3.Lerp(damageText.transform.localPosition, endPosition, 3 * Time.deltaTime);
+
+            yield return null;
+        }
+
+        Destroy(damageText);
     }
 
     private IEnumerator MoveToPosition(List<Vector3Int> path)

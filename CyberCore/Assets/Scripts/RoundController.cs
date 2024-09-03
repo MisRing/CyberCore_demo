@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoundController : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class RoundController : MonoBehaviour
 
     [SerializeField]
     private List<PrefabPositionPair> enemiesToSpawn;
+
+    [SerializeField]
+    private GameObject defeatCanvas;
+    [SerializeField]
+    private GameObject playerUICanvas;
 
     private int currentEnemy = 0;
 
@@ -92,5 +98,16 @@ public class RoundController : MonoBehaviour
         currentEnemy = 0;
         round++;
         StartCoroutine(DeckManager.instance.NewTurnCoroutine());
+    }
+
+    public void PlayerLost()
+    {
+        playerUICanvas.SetActive(false);
+        defeatCanvas.SetActive(true);
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }

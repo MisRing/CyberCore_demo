@@ -21,6 +21,8 @@ public class EnemyController : UnitController
     [SerializeField]
     private GameObject bulletPref;
 
+    private bool canShoot = false;
+
 
     public void StartAction()
     {
@@ -29,7 +31,10 @@ public class EnemyController : UnitController
 
     public override void EndMove()
     {
-        Shoot();
+        if(canShoot)
+            Shoot();
+        else
+            EndActions();
     }
 
     public void Shoot()
@@ -68,12 +73,18 @@ public class EnemyController : UnitController
             yield return null;
         }
 
-        bullet.transform.position = target;
-
         Destroy(bullet);
 
-        if(endShooting)
+        if(!RoundController.instance.player.TakeDamage(damage))
+        {
+            if(endShooting)
             EndActions();
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+            RoundController.instance.PlayerLost();
+        }
     }
 
     private void MoveAction()
@@ -108,7 +119,12 @@ public class EnemyController : UnitController
         }
 
         if (shortestPath.Count > moveDistance)
+        {
+            canShoot = false;
             shortestPath.RemoveRange(moveDistance, shortestPath.Count - moveDistance);
+        }
+        else
+            canShoot = true;
 
         MoveUnit(shortestPath);
     }
