@@ -9,8 +9,74 @@ public class EnemyController : UnitController
     [SerializeField]
     private int moveDistance = 5;
 
+    [SerializeField]
+    private uint bullets = 3;
+    [SerializeField]
+    private int damage = 2;
+    [SerializeField]
+    private float shootDelay = 0.1f;
+    [SerializeField]
+    private float bulletSpeed = 1f;
+
+    [SerializeField]
+    private GameObject bulletPref;
+
 
     public void StartAction()
+    {
+        MoveAction();
+    }
+
+    public override void EndMove()
+    {
+        Shoot();
+    }
+
+    public void Shoot()
+    {
+        bool end = false;
+        for (int i = 1; i <= bullets; i++)
+        {
+            if(i == bullets)
+                end = true;
+            StartCoroutine(ShootAnimation(shootDelay * i, end));
+        }
+    }
+
+    public IEnumerator ShootAnimation(float delay, bool endShooting)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Vector3 startPosition = transform.position;
+        startPosition.z = -3;
+        startPosition.y += 0.5f;
+        GameObject bullet = Instantiate(bulletPref, startPosition, Quaternion.identity);
+
+        Vector3 target = RoundController.instance.player.transform.position;
+        target.z = -3;
+        target.y += 0.5f;
+        target += new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f), 0);
+
+        Vector3 direction = (target - bullet.transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        while (Vector3.Distance(bullet.transform.position, target) > 0.01f)
+        {
+            bullet.transform.position = Vector3.MoveTowards(bullet.transform.position, target, bulletSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        bullet.transform.position = target;
+
+        Destroy(bullet);
+
+        if(endShooting)
+            EndActions();
+    }
+
+    private void MoveAction()
     {
         List<Vector3Int> lastCells = new List<Vector3Int>();
 
@@ -27,9 +93,20 @@ public class EnemyController : UnitController
                                                                 currentGridPosition,
                                                                 new Vector2Int(cell.x, cell.y));
 
-            if(shortestPath.Count == 0 || shortestPath.Count > path.Count)
+            if (path.Count == 0)
+                continue;
+
+            if (shortestPath.Count == 0 || shortestPath.Count > path.Count)
                 shortestPath = path;
         }
+
+        if (shortestPath.Count == 0)
+        {
+            Debug.Log("No path.");
+            EndActions();
+            return;
+        }
+
         if (shortestPath.Count > moveDistance)
             shortestPath.RemoveRange(moveDistance, shortestPath.Count - moveDistance);
 

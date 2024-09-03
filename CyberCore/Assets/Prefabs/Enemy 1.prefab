@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 922838fd789dbad438b0c11851cb3ed4, type: 3}
   m_Color: {r: 1, g: 0, b: 0.026226044, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,3 +103,8 @@ MonoBehaviour:
   moveSpeed: 10
   shootRange: 3
   moveDistance: 5
+  bullets: 3
+  damage: 2
+  shootDelay: 0.1
+  bulletSpeed: 10
+  bulletPref: {fileID: 8419248034286924111, guid: 437db33822fecb44fafeb83aac40a9b5, type: 3}

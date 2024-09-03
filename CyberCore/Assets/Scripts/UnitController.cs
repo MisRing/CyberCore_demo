@@ -73,6 +73,11 @@ public class UnitController : MonoBehaviour
         
         inPath = false;
 
+        EndMove();
+    }
+
+    public virtual void EndMove()
+    {
         EndActions();
     }
 
