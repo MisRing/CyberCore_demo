@@ -46,6 +46,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
         cardUI.updateStatus = false;
+        if (RoundController.instance.enemyTurn)
+            return;
         startPosition = cardRectTransform.anchoredPosition;
 
         Vector2 localPointerPosition;
@@ -59,6 +61,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public virtual void OnDrag(PointerEventData eventData)
     {
+        if (RoundController.instance.enemyTurn)
+            return;
+
         Vector2 localPointerPosition;
         RectTransform parentRectTransform = cardRectTransform.parent.GetComponent<RectTransform>();
 
@@ -72,6 +77,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         cardUI.updateStatus = true;
         cardUI.CloseCard(eventData);
+
+        if (RoundController.instance.enemyTurn)
+            return;
 
         if (IsInPlayableArea())
         {

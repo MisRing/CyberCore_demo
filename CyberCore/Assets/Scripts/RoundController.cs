@@ -10,6 +10,8 @@ public class RoundController : MonoBehaviour
     [SerializeField]
     private int round = 0;
 
+    public bool enemyTurn = false;
+
     [SerializeField]
     private List<EnemyController> enemies;
 
@@ -62,6 +64,7 @@ public class RoundController : MonoBehaviour
 
     public void StartEnemyTurn()
     {
+        enemyTurn = true;
         StartCoroutine(StartEnemyTurnCoroutine());
     }
 
@@ -95,6 +98,7 @@ public class RoundController : MonoBehaviour
 
     public void StartPlayerTurn()
     {
+        enemyTurn = false;
         currentEnemy = 0;
         round++;
         StartCoroutine(DeckManager.instance.NewTurnCoroutine());
@@ -104,6 +108,15 @@ public class RoundController : MonoBehaviour
     {
         playerUICanvas.SetActive(false);
         defeatCanvas.SetActive(true);
+    }
+
+    public void EnemyDefeated(EnemyController enemy)
+    {
+        if (enemies.Contains(enemy))
+            enemies.Remove(enemy);
+
+        BattleGridManager.instance.DeletEntity(enemy.currentGridPosition);
+        Destroy(enemy.gameObject);
     }
 
     public void NewGame()

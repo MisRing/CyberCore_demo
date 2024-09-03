@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 8825941748628346756}
   - component: {fileID: 1112543460984442240}
   - component: {fileID: 4835280879114416164}
-  - component: {fileID: 8434842598958473856}
+  - component: {fileID: 7852214683063434874}
   - component: {fileID: 345709858443165842}
   - component: {fileID: 1639295393306857572}
   - component: {fileID: 3888922310608861202}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8434842598958473856
+--- !u!114 &7852214683063434874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,17 +227,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5675223157491764261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6779fa0f995253e4f94722e95138cd9f, type: 3}
+  m_Script: {fileID: 11500000, guid: d7aafae7e1421c14b9477c2325fd236d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  cardName: Red
-  description: none
-  cost: 0
+  id: 1
+  cardName: Double Fire
+  description: Deals 3 damage to enemy twice.
+  cost: 3
   cardType: 1
   cardData: {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
-  deckManager: {fileID: 0}
   cardUI: {fileID: 3888922310608861202}
+  shootRange: 5
+  bullets: 2
+  damage: 3
+  shootDelay: 0.1
+  bulletSpeed: 10
+  bulletPref: {fileID: 8419248034286924111, guid: 437db33822fecb44fafeb83aac40a9b5, type: 3}
 --- !u!114 &345709858443165842
 MonoBehaviour:
   m_ObjectHideFlags: 0

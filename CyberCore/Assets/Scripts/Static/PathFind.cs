@@ -165,14 +165,18 @@ public static class PathFind
                                   Vector2Int start,
                                   int maxRadius,
                                   ref List<Vector3Int> allVisibleCells,
-                                  ref List<Vector3Int> edgeCells)
+                                  ref List<Vector3Int> edgeCells,
+                                  string preferredEntity = null)
     {
         var queue = new Queue<Vector2Int>();
         var distances = new Dictionary<Vector2Int, int>();
 
         queue.Enqueue(start);
         distances[start] = 0;
-        allVisibleCells.Add(new Vector3Int(start.x, start.y, 0));
+        if (preferredEntity == null
+                    || (BattleGridManager.instance.CheckCellForEntity(start)
+                    && BattleGridManager.instance.GetCellEntity(start).tag == preferredEntity))
+            allVisibleCells.Add(new Vector3Int(start.x, start.y, 0));
 
         while (queue.Count > 0)
         {
@@ -181,7 +185,10 @@ public static class PathFind
 
             if (currentDistance == maxRadius)
             {
-                edgeCells.Add(new Vector3Int(current.x, current.y, 0));
+                if(preferredEntity == null
+                    || (BattleGridManager.instance.CheckCellForEntity(current)
+                    && BattleGridManager.instance.GetCellEntity(current).tag == preferredEntity))
+                    edgeCells.Add(new Vector3Int(current.x, current.y, 0));
                 continue;
             }
 
@@ -199,7 +206,10 @@ public static class PathFind
                     {
                         distances[nextPos] = currentDistance + 1;
                         queue.Enqueue(nextPos);
-                        allVisibleCells.Add(new Vector3Int(nextPos.x, nextPos.y, 0));
+                        if (preferredEntity == null ||
+                            (BattleGridManager.instance.CheckCellForEntity(nextPos)
+                            && BattleGridManager.instance.GetCellEntity(nextPos).tag == preferredEntity))
+                            allVisibleCells.Add(new Vector3Int(nextPos.x, nextPos.y, 0));
                     }
                 }
             }
@@ -209,7 +219,8 @@ public static class PathFind
     public static void GetVisibleAreaEdge(Tilemap tileMap,
                                   Vector2Int start,
                                   int maxRadius,
-                                  ref List<Vector3Int> edgeCells)
+                                  ref List<Vector3Int> edgeCells,
+                                  string preferredEntity = null)
     {
         var queue = new Queue<Vector2Int>();
         var distances = new Dictionary<Vector2Int, int>();
@@ -224,6 +235,10 @@ public static class PathFind
 
             if (currentDistance == maxRadius)
             {
+                if (preferredEntity == null
+                    || (BattleGridManager.instance.CheckCellForEntity(current)
+                    && BattleGridManager.instance.GetCellEntity(current).tag == preferredEntity))
+                    edgeCells.Add(new Vector3Int(current.x, current.y, 0));
                 edgeCells.Add(new Vector3Int(current.x, current.y, 0));
                 continue;
             }

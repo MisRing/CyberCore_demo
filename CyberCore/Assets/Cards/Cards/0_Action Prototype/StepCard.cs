@@ -13,12 +13,16 @@ public class StepCard : Card
     public override void OnBeginDrag(PointerEventData eventData)
     {
         base.OnBeginDrag(eventData);
+        if (RoundController.instance.enemyTurn)
+            return;
         StartCoroutine(MoveToCastSlot());
         HighlightAvailableCells();
     }
 
     public override void OnDrag(PointerEventData eventData)
     {
+        if (RoundController.instance.enemyTurn)
+            return;
 
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int tilePos = BattleGridManager.instance.tilemap.WorldToCell(worldPos);
@@ -46,6 +50,9 @@ public class StepCard : Card
         StopAllCoroutines();
         cardUI.updateStatus = true;
         cardUI.CloseCard(eventData);
+
+        if (RoundController.instance.enemyTurn)
+            return;
 
         GridUIManager.instance.DeliteHightLights();
 

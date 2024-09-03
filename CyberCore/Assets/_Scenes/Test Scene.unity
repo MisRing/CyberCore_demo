@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   round: 0
+  enemyTurn: 0
   enemies: []
   player: {fileID: 0}
   playerPrefab:
@@ -293,10 +294,6 @@ MonoBehaviour:
     position: {x: 5, y: 3}
   - prefab: {fileID: 8318236628980635994, guid: 6a9917caf5353404b8c7f85677185d1d, type: 3}
     position: {x: 5, y: 4}
-  - prefab: {fileID: 8318236628980635994, guid: 6a9917caf5353404b8c7f85677185d1d, type: 3}
-    position: {x: 4, y: 2}
-  - prefab: {fileID: 8318236628980635994, guid: 6a9917caf5353404b8c7f85677185d1d, type: 3}
-    position: {x: 4, y: 3}
   defeatCanvas: {fileID: 1462393662}
   playerUICanvas: {fileID: 1770169091}
 --- !u!4 &140478217
@@ -2239,7 +2236,6 @@ GameObject:
   - component: {fileID: 1948871992}
   - component: {fileID: 1948871990}
   - component: {fileID: 1948871991}
-  - component: {fileID: 1948871993}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -3299,8 +3295,8 @@ Tilemap:
   - first: {x: 5, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 10
-      m_TileSpriteIndex: 10
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4802,7 +4798,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: abf532b49d78b464dac496b18759e81a, type: 2}
   - m_RefCount: 126
     m_Data: {fileID: 11400000, guid: 24111e458a297a14286cc8f468effb84, type: 2}
-  - m_RefCount: 55
+  - m_RefCount: 56
     m_Data: {fileID: 11400000, guid: 7f692bf53fc61ae4b9035e75c83135bf, type: 2}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: f31b40c81b51c6c4494e2c292b52ff26, type: 2}
@@ -4818,7 +4814,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 6dcbcd20e8481a948bb74f9a8e4ae70a, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: e686b20b3a866384cafb9d680ac1fe41, type: 2}
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 4fc40c0c76553434da5ec0ad60e51db1, type: 2}
   - m_RefCount: 11
     m_Data: {fileID: 11400000, guid: ee3ab7ad1070d094f86b5344f1f978b8, type: 2}
@@ -4827,7 +4823,7 @@ Tilemap:
     m_Data: {fileID: -1385920598, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
   - m_RefCount: 126
     m_Data: {fileID: -278240985, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
-  - m_RefCount: 55
+  - m_RefCount: 56
     m_Data: {fileID: -241010051, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: -1757279781, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
@@ -4843,7 +4839,7 @@ Tilemap:
     m_Data: {fileID: -923510088, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 1947715381, guid: 97444a5b90e8707428d977871f0e7659, type: 3}
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: d40a7f3fa7295d746a9c8582d9f8dcc4, type: 3}
   - m_RefCount: 11
     m_Data: {fileID: 21300000, guid: 3aadbe394e46b064a9a977106fa72dc6, type: 3}
@@ -4939,7 +4935,7 @@ TilemapRenderer:
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
-  m_Mode: 1
+  m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!4 &1948871992
@@ -4957,42 +4953,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1960602699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!19719996 &1948871993
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948871989}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!1 &1960602698
 GameObject:
   m_ObjectHideFlags: 0

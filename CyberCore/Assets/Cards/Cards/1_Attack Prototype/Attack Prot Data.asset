@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Attack Prot Data
   m_EditorClassIdentifier: 
   cardId: 1
-  cardName: Blast fire
+  cardName: Double Fire
   cardCost: 3
-  cardDescription: Deals 3 damage in a line.
+  cardDescription: Deals 3 damage to enemy twice.
   cardType: 1
   cardPref: {fileID: 5675223157491764261, guid: 211f84761c24b734da9db7dec18f3ae2, type: 3}

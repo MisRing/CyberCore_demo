@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2529554319412734010}
   m_Layer: 0
   m_Name: Enemy 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   maxHealth: 10
   currentGridPosition: {x: 0, y: 0}
   moveSpeed: 10
+  damageTextPref: {fileID: 4541077784714622170, guid: d739e9e60baaa1a4981b5cacfbe5bb24, type: 3}
   shootRange: 3
   moveDistance: 5
   bullets: 3
