@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a4ee4ec4f088c4798508a22e446453, type: 3}
-  m_Name: Enemy
+  m_Name: Target
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 96caff511dcc58440ab2ec7c70523415, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.7803922}

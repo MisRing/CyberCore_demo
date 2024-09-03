@@ -377,6 +377,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 332f1dce3a59519439ebe55307378dbc, type: 2}
   - {fileID: 11400000, guid: 9c7bbc27cee9de94c82a1ba6791825e3, type: 2}
   - {fileID: 11400000, guid: 5f56159abf2c4de4581c7fbe39ec3213, type: 2}
+  - {fileID: 11400000, guid: 196589e1d521f44448c3e45b5896c158, type: 2}
   targetPref: {fileID: 1722546606815046694, guid: 54aa958a28b45d341bc6edafd2c4601d, type: 3}
   targetLinePref: {fileID: 4545977241257805127, guid: 365d6b052dbe441448de10c7d109160a, type: 3}
   targetSpeed: 15

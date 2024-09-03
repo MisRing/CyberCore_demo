@@ -104,18 +104,30 @@ public class DoubleFire : Card
 
     private void HighlightAvailableCells()
     {
-        List<Vector3Int> visibleCells = new List<Vector3Int>();
-        List<Vector3Int> visibleEdge = new List<Vector3Int>();
+        List<Vector3Int> visibleTargetCells = new List<Vector3Int>();
+        List<Vector3Int> VisibleCells = new List<Vector3Int>();
 
         PathFind.GetVisibleArea(BattleGridManager.instance.tilemap,
                                 RoundController.instance.player.currentGridPosition,
                                 shootRange,
-                                ref visibleCells,
-                                ref visibleEdge,
+                                ref VisibleCells,
+                                ref visibleTargetCells);
+
+        if (visibleTargetCells.Count > 0)
+            GridUIManager.instance.GenerateHightLights(VisibleCells, TargetState.TargetRange);
+
+        visibleTargetCells = new List<Vector3Int>();
+        VisibleCells = new List<Vector3Int>();
+
+        PathFind.GetVisibleArea(BattleGridManager.instance.tilemap,
+                                RoundController.instance.player.currentGridPosition,
+                                shootRange,
+                                ref visibleTargetCells,
+                                ref VisibleCells,
                                 "Enemy");
 
-        if(visibleCells.Count > 0)
-            GridUIManager.instance.GenerateHightLights(visibleCells, TargetState.Enemy);
+        if (visibleTargetCells.Count > 0)
+            GridUIManager.instance.GenerateHightLights(visibleTargetCells, TargetState.Target);
     }
 
     public override void PlayCard(UnitController player)
