@@ -45,7 +45,7 @@ public class RoundController : MonoBehaviour
     {
         player = Instantiate(playerPrefab.prefab).GetComponent<UnitController>();
 
-        player.SetUnitPosition(playerPrefab.position.x, playerPrefab.position.y);
+        player.SetUnitStats(playerPrefab.position.x, playerPrefab.position.y);
     }
 
     private void SpawnEnemies()
@@ -54,7 +54,7 @@ public class RoundController : MonoBehaviour
         {
             EnemyController enemy = Instantiate(enemyPref.prefab).GetComponent<EnemyController>();
 
-            enemy.SetUnitPosition(enemyPref.position.x, enemyPref.position.y);
+            enemy.SetUnitStats(enemyPref.position.x, enemyPref.position.y);
 
             enemies.Add(enemy);
         }

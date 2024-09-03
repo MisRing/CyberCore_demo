@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39eb6b0593750ce448ff5351b00f69ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  maxHealth: 10
+  currentHealth: 30
+  maxHealth: 30
   currentGridPosition: {x: 0, y: 0}
   moveSpeed: 10
   damageTextPref: {fileID: 4541077784714622170, guid: d739e9e60baaa1a4981b5cacfbe5bb24, type: 3}

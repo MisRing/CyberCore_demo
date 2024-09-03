@@ -21,8 +21,6 @@ public class EnemyController : UnitController
     [SerializeField]
     private GameObject bulletPref;
 
-    private bool canShoot = false;
-
 
     public void StartAction()
     {
@@ -31,7 +29,23 @@ public class EnemyController : UnitController
 
     public override void EndMove()
     {
-        if(canShoot)
+        List<Vector3Int> visibleCells = new List<Vector3Int>();
+        List<Vector3Int> visibleEdge = new List<Vector3Int>();
+
+        PathFind.GetVisibleArea(BattleGridManager.instance.tilemap,
+                                currentGridPosition,
+                                shootRange,
+                                ref visibleCells,
+                                ref visibleEdge);
+
+        Vector3Int playerPos = new Vector3Int(RoundController.instance.player.currentGridPosition.x,
+                                              RoundController.instance.player.currentGridPosition.y,
+                                              0);
+
+        //GridUIManager.instance.DeliteHightLights();
+        //GridUIManager.instance.GenerateHightLights(visibleEdge, TargetState.Enemy);
+
+        if (visibleCells.Contains(playerPos))
             Shoot();
         else
             EndActions();
@@ -89,16 +103,16 @@ public class EnemyController : UnitController
 
     private void MoveAction()
     {
-        List<Vector3Int> lastCells = new List<Vector3Int>();
+        List<Vector3Int> visibleEdge = new List<Vector3Int>();
 
-        PathFind.GetLastRadiusWay(BattleGridManager.instance.tilemap,
-                                  RoundController.instance.player.currentGridPosition,
-                                  shootRange,
-                                  ref lastCells);
+        PathFind.GetVisibleAreaEdge(BattleGridManager.instance.tilemap,
+                                    RoundController.instance.player.currentGridPosition,
+                                    shootRange,
+                                    ref visibleEdge);
 
         List<Vector3Int> shortestPath = new List<Vector3Int>();
 
-        foreach (var cell in lastCells)
+        foreach (var cell in visibleEdge)
         {
             List<Vector3Int> path = PathFind.GetShortestPath(BattleGridManager.instance.tilemap,
                                                                 currentGridPosition,
@@ -120,11 +134,8 @@ public class EnemyController : UnitController
 
         if (shortestPath.Count > moveDistance)
         {
-            canShoot = false;
             shortestPath.RemoveRange(moveDistance, shortestPath.Count - moveDistance);
         }
-        else
-            canShoot = true;
 
         MoveUnit(shortestPath);
     }

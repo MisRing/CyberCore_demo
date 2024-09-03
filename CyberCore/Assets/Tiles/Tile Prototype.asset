@@ -34,5 +34,4 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 0
   m_ColliderType: 1
-  x: 0
-  y: 0
+  tileState: 1

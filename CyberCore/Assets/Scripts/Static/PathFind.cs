@@ -50,7 +50,7 @@ public static class PathFind
         }
     }
 
-    public static void GetLastRadiusWay(Tilemap tileMap,
+    public static void GetRadiusWayEdge(Tilemap tileMap,
                                     Vector2Int start,
                                     int maxRadius,
                                     ref List<Vector3Int> lastCells)
@@ -160,5 +160,132 @@ public static class PathFind
 
         return path;
     }
+
+    public static void GetVisibleArea(Tilemap tileMap,
+                                  Vector2Int start,
+                                  int maxRadius,
+                                  ref List<Vector3Int> allVisibleCells,
+                                  ref List<Vector3Int> edgeCells)
+    {
+        var queue = new Queue<Vector2Int>();
+        var distances = new Dictionary<Vector2Int, int>();
+
+        queue.Enqueue(start);
+        distances[start] = 0;
+        allVisibleCells.Add(new Vector3Int(start.x, start.y, 0));
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+            int currentDistance = distances[current];
+
+            if (currentDistance == maxRadius)
+            {
+                edgeCells.Add(new Vector3Int(current.x, current.y, 0));
+                continue;
+            }
+
+            foreach (var direction in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+            {
+                Vector2Int nextPos = current + direction;
+                Vector3Int nextTile = new Vector3Int(nextPos.x, nextPos.y, 0);
+
+                // Проверка проходимости клетки и видимости
+                if (tileMap.HasTile(nextTile)
+                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && IsVisible(start, nextPos, tileMap))
+                {
+                    if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
+                    {
+                        distances[nextPos] = currentDistance + 1;
+                        queue.Enqueue(nextPos);
+                        allVisibleCells.Add(new Vector3Int(nextPos.x, nextPos.y, 0));
+                    }
+                }
+            }
+        }
+    }
+
+    public static void GetVisibleAreaEdge(Tilemap tileMap,
+                                  Vector2Int start,
+                                  int maxRadius,
+                                  ref List<Vector3Int> edgeCells)
+    {
+        var queue = new Queue<Vector2Int>();
+        var distances = new Dictionary<Vector2Int, int>();
+
+        queue.Enqueue(start);
+        distances[start] = 0;
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+            int currentDistance = distances[current];
+
+            if (currentDistance == maxRadius)
+            {
+                edgeCells.Add(new Vector3Int(current.x, current.y, 0));
+                continue;
+            }
+
+            foreach (var direction in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+            {
+                Vector2Int nextPos = current + direction;
+                Vector3Int nextTile = new Vector3Int(nextPos.x, nextPos.y, 0);
+
+                // Проверка проходимости клетки и видимости
+                if (tileMap.HasTile(nextTile)
+                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && IsVisible(start, nextPos, tileMap))
+                {
+                    if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
+                    {
+                        distances[nextPos] = currentDistance + 1;
+                        queue.Enqueue(nextPos);
+                    }
+                }
+            }
+        }
+    }
+
+    // Метод для проверки видимости между двумя клетками
+    private static bool IsVisible(Vector2Int start, Vector2Int end, Tilemap tileMap)
+    {
+        // Алгоритм Брезенхэма для проверки видимости по прямой линии
+        Vector2Int diff = end - start;
+        int dx = Mathf.Abs(diff.x);
+        int dy = Mathf.Abs(diff.y);
+        int sx = diff.x > 0 ? 1 : -1;
+        int sy = diff.y > 0 ? 1 : -1;
+        int err = dx - dy;
+
+        Vector2Int currentPos = start;
+
+        while (currentPos != end)
+        {
+            Vector3Int currentTile = new Vector3Int(currentPos.x, currentPos.y, 0);
+
+            // Если клетка на пути не проходима, то видимости нет
+            if (tileMap.HasTile(currentTile) && tileMap.GetTile<CustomTile>(currentTile).tileState == TileState.Obstacle)
+            {
+                return false;
+            }
+
+            int e2 = 2 * err;
+            if (e2 > -dy)
+            {
+                err -= dy;
+                currentPos.x += sx;
+            }
+            if (e2 < dx)
+            {
+                err += dx;
+                currentPos.y += sy;
+            }
+        }
+
+        return true;
+    }
+
 
 }

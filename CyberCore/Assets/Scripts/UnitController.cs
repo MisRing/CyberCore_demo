@@ -125,8 +125,9 @@ public class UnitController : MonoBehaviour, IDamageable
 
 
 
-    public void SetUnitPosition(int x, int y)
+    public void SetUnitStats(int x, int y)
     {
+        currentHealth = maxHealth;
         currentGridPosition = new Vector2Int(x, y);
         BattleGridManager.instance.AddEntity(currentGridPosition, gameObject);
         transform.position = BattleGridManager.instance.tilemap.CellToWorld(new Vector3Int(x, y)) + Vector3.back + Vector3.up * 0.5f;
