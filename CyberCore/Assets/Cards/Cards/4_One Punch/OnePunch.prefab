@@ -238,7 +238,7 @@ MonoBehaviour:
   cardData: {fileID: 11400000, guid: a41fdb2be75e8f44c94ac2f940b26209, type: 2}
   cardUI: {fileID: 3888922310608861202}
   attackRange: 1
-  attackCount: 2
+  attackCount: 1
   damage: 10
   attackDelay: 0.3
 --- !u!114 &345709858443165842

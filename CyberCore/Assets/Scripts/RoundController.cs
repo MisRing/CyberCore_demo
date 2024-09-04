@@ -116,7 +116,15 @@ public class RoundController : MonoBehaviour
             enemies.Remove(enemy);
 
         BattleGridManager.instance.DeletEntity(enemy.currentGridPosition);
-        Destroy(enemy.gameObject);
+
+        StartCoroutine(EnemyDeathAnimation(enemy));
+    }
+
+    private IEnumerator EnemyDeathAnimation(EnemyController enemy)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(enemy != null)
+            Destroy(enemy.gameObject);
     }
 
     public void NewGame()

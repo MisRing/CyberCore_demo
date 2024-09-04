@@ -11,7 +11,7 @@ public class OnePunch : Card
     [SerializeField]
     private int attackRange = 1;
     [SerializeField]
-    private uint attackCount = 2;
+    private uint attackCount = 1;
     [SerializeField]
     private int damage = 10;
     [SerializeField]
@@ -142,7 +142,7 @@ public class OnePunch : Card
     private static IEnumerator ShootAnimation(float delay, EnemyController enemy, int damage)
     {
         yield return new WaitForSeconds(delay);
-
+        
         if(enemy != null)
             if(enemy.TakeDamage(damage))
                 RoundController.instance.EnemyDefeated(enemy);
