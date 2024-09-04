@@ -105,7 +105,7 @@ public class EnemyController : UnitController
     {
         List<Vector3Int> visibleEdge = new List<Vector3Int>();
 
-        PathFind.GetVisibleAreaEdge(BattleGridManager.instance.tilemap,
+        PathFind.GetVisibleArea(BattleGridManager.instance.tilemap,
                                     RoundController.instance.player.currentGridPosition,
                                     shootRange,
                                     ref visibleEdge);

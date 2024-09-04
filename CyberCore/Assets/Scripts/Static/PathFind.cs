@@ -9,7 +9,8 @@ public static class PathFind
                                     Vector2Int start,
                                     int maxRadius,
                                     ref List<Vector3Int> allCells,
-                                    ref List<Vector3Int> lastCells)
+                                    ref List<Vector3Int> lastCells,
+                                    bool canJump = false)
     {
         var queue = new Queue<Vector2Int>();
         var distances = new Dictionary<Vector2Int, int>();
@@ -36,7 +37,8 @@ public static class PathFind
                 Vector3Int nextTile = new Vector3Int(nextPos.x, nextPos.y);
                 
                 if (tileMap.HasTile(nextTile)
-                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && (tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    || (canJump && tileMap.GetTile<CustomTile>(nextTile).tileState != TileState.Obstacle))
                     && !BattleGridManager.instance.CheckCellForEntity(nextPos))
                 {
                     if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
@@ -50,10 +52,11 @@ public static class PathFind
         }
     }
 
-    public static void GetRadiusWayEdge(Tilemap tileMap,
+    public static void GetRadiusWay(Tilemap tileMap,
                                     Vector2Int start,
                                     int maxRadius,
-                                    ref List<Vector3Int> lastCells)
+                                    ref List<Vector3Int> lastCells,
+                                    bool canJump = false)
     {
         var queue = new Queue<Vector2Int>();
         var distances = new Dictionary<Vector2Int, int>();
@@ -79,7 +82,8 @@ public static class PathFind
                 Vector3Int nextTile = new Vector3Int(nextPos.x, nextPos.y);
 
                 if (tileMap.HasTile(nextTile)
-                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && (tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    || (canJump && tileMap.GetTile<CustomTile>(nextTile).tileState != TileState.Obstacle))
                     && !BattleGridManager.instance.CheckCellForEntity(nextPos))
                 {
                     if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
@@ -94,7 +98,8 @@ public static class PathFind
 
     public static List<Vector3Int> GetShortestPath(Tilemap tileMap,
                                                Vector2Int start,
-                                               Vector2Int end)
+                                               Vector2Int end,
+                                               bool canJump = false)
     {
         var openSet = new SimplePriorityQueue<Vector2Int, int>();
         var gScore = new Dictionary<Vector2Int, int>();
@@ -120,7 +125,8 @@ public static class PathFind
                 Vector3Int neighborTile = new Vector3Int(neighbor.x, neighbor.y, 0);
 
                 if (tileMap.HasTile(neighborTile)
-                    && tileMap.GetTile<CustomTile>(neighborTile).tileState == TileState.Walkable
+                    && (tileMap.GetTile<CustomTile>(neighborTile).tileState == TileState.Walkable
+                    || (canJump && tileMap.GetTile<CustomTile>(neighborTile).tileState != TileState.Obstacle))
                     && !BattleGridManager.instance.CheckCellForEntity(neighbor))
                 {
                     int tentativeGScore = gScore[current] + 1;
@@ -141,24 +147,6 @@ public static class PathFind
         }
 
         return new List<Vector3Int>();
-    }
-
-    private static int Heuristic(Vector2Int a, Vector2Int b)
-    {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
-    }
-
-    private static List<Vector3Int> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
-    {
-        var path = new List<Vector3Int> { new Vector3Int(current.x, current.y, 0) };
-
-        while (cameFrom.ContainsKey(current))
-        {
-            current = cameFrom[current];
-            path.Insert(0, new Vector3Int(current.x, current.y, 0));
-        }
-
-        return path;
     }
 
     public static void GetVisibleArea(Tilemap tileMap,
@@ -199,7 +187,7 @@ public static class PathFind
 
                 // Проверка проходимости клетки и видимости
                 if (tileMap.HasTile(nextTile)
-                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && tileMap.GetTile<CustomTile>(nextTile).tileState != TileState.Obstacle
                     && IsVisible(start, nextPos, tileMap))
                 {
                     if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
@@ -216,7 +204,7 @@ public static class PathFind
         }
     }
 
-    public static void GetVisibleAreaEdge(Tilemap tileMap,
+    public static void GetVisibleArea(Tilemap tileMap,
                                   Vector2Int start,
                                   int maxRadius,
                                   ref List<Vector3Int> edgeCells,
@@ -250,7 +238,7 @@ public static class PathFind
 
                 // Проверка проходимости клетки и видимости
                 if (tileMap.HasTile(nextTile)
-                    && tileMap.GetTile<CustomTile>(nextTile).tileState == TileState.Walkable
+                    && tileMap.GetTile<CustomTile>(nextTile).tileState != TileState.Obstacle
                     && IsVisible(start, nextPos, tileMap))
                 {
                     if (!distances.ContainsKey(nextPos) || currentDistance + 1 < distances[nextPos])
@@ -263,7 +251,29 @@ public static class PathFind
         }
     }
 
-    // Метод для проверки видимости между двумя клетками
+    //-----------------------------------------------------------------------------------------------------------------//
+    //________________________________________Supporting methods_______________________________________________________//
+    //_________________________________________________________________________________________________________________//
+
+    private static int Heuristic(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    private static List<Vector3Int> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
+    {
+        var path = new List<Vector3Int> { new Vector3Int(current.x, current.y, 0) };
+
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Insert(0, new Vector3Int(current.x, current.y, 0));
+        }
+
+        return path;
+    }
+
+    
     private static bool IsVisible(Vector2Int start, Vector2Int end, Tilemap tileMap)
     {
         // Алгоритм Брезенхэма для проверки видимости по прямой линии
@@ -280,7 +290,6 @@ public static class PathFind
         {
             Vector3Int currentTile = new Vector3Int(currentPos.x, currentPos.y, 0);
 
-            // Если клетка на пути не проходима, то видимости нет
             if (tileMap.HasTile(currentTile) && tileMap.GetTile<CustomTile>(currentTile).tileState == TileState.Obstacle)
             {
                 return false;
