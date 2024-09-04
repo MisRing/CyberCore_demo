@@ -9,6 +9,8 @@ public class StepCard : Card
 
     [SerializeField]
     private int stepRange = 4;
+    [SerializeField]
+    private bool canJump = false;
 
     public override void OnBeginDrag(PointerEventData eventData)
     {
@@ -75,7 +77,8 @@ public class StepCard : Card
                                     RoundController.instance.player.currentGridPosition,
                                     stepRange,
                                     ref allCells,
-                                    ref lastCells);
+                                    ref lastCells,
+                                    canJump);
 
             if(allCells.Contains(castCellPos))
                 PlayCard(RoundController.instance.player);
@@ -97,7 +100,8 @@ public class StepCard : Card
                                 RoundController.instance.player.currentGridPosition,
                                 stepRange,
                                 ref allCells,
-                                ref lastCells);
+                                ref lastCells,
+                                canJump);
 
 
         GridUIManager.instance.GenerateHightLights(allCells, TargetState.AvThrough);
@@ -106,7 +110,7 @@ public class StepCard : Card
 
     public override void PlayCard(UnitController player)
     {
-        player.MoveUnit(new Vector2Int(castCellPos.x, castCellPos.y));
+        player.MoveUnit(new Vector2Int(castCellPos.x, castCellPos.y), canJump);
 
         base.PlayCard(player);
     }

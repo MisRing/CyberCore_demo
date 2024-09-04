@@ -416,11 +416,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
   - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
   - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
-  - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
-  - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
-  - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
+  - {fileID: 11400000, guid: bf5de4e8dd69f9941875a6acf001fefd, type: 2}
+  - {fileID: 11400000, guid: bf5de4e8dd69f9941875a6acf001fefd, type: 2}
+  - {fileID: 11400000, guid: bf5de4e8dd69f9941875a6acf001fefd, type: 2}
+  - {fileID: 11400000, guid: bf5de4e8dd69f9941875a6acf001fefd, type: 2}
   - {fileID: 11400000, guid: 60ee7d4891fcd3048accab5b6db4eba2, type: 2}
-  - {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
   attackDeck:
   - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
   - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}

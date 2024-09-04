@@ -21,11 +21,12 @@ public class UnitController : MonoBehaviour, IDamageable
     [SerializeField]
     private GameObject damageTextPref;
 
-    public void MoveUnit(Vector2Int newPosition)
+    public void MoveUnit(Vector2Int newPosition, bool canJump = false)
     {
         List<Vector3Int> path = PathFind.GetShortestPath(BattleGridManager.instance.tilemap,
                                                                 currentGridPosition,
-                                                                newPosition);
+                                                                newPosition,
+                                                                canJump);
 
         BattleGridManager.instance.MoveEntity(currentGridPosition, newPosition, gameObject);
 

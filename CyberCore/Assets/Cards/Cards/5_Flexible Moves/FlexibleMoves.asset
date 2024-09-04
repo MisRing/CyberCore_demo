@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f10a0d47afc208a45b3f91cf884cdbf7, type: 3}
-  m_Name: Action Prot Data
+  m_Name: FlexibleMoves
   m_EditorClassIdentifier: 
-  cardId: 0
-  cardName: Step forward
+  cardId: 5
+  cardName: Flexible Moves
   cardCost: 1
-  cardDescription: Moves you 6 tiles.
+  cardDescription: Moves you 6 tiles with jumps.
   cardType: 2
   cardPref: {fileID: 5675223157491764261, guid: e06d6508d8b7d774da86f1ca18bbbda8, type: 3}

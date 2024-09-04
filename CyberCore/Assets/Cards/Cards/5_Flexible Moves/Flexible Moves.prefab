@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 3888922310608861202}
   - component: {fileID: 4892935431331355069}
   m_Layer: 5
-  m_Name: Action Prototype
+  m_Name: Flexible Moves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,14 +230,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2067bd92032454b8efd599483768c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  cardName: 
+  id: 5
+  cardName: Flexible Moves
   description: 
-  cost: 0
+  cost: 1
   cardType: 2
-  cardData: {fileID: 11400000, guid: 63c491dd694e4db4ca01e67c924184be, type: 2}
+  cardData: {fileID: 11400000, guid: bf5de4e8dd69f9941875a6acf001fefd, type: 2}
   cardUI: {fileID: 3888922310608861202}
-  stepRange: 6
+  stepRange: 4
+  canJump: 1
 --- !u!114 &345709858443165842
 MonoBehaviour:
   m_ObjectHideFlags: 0
