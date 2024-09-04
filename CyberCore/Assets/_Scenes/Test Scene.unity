@@ -427,7 +427,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
   - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
   - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
-  - {fileID: 11400000, guid: e1011feb8e7d0ad4396f6a012a1e5f67, type: 2}
+  - {fileID: 11400000, guid: a41fdb2be75e8f44c94ac2f940b26209, type: 2}
+  - {fileID: 11400000, guid: a41fdb2be75e8f44c94ac2f940b26209, type: 2}
+  - {fileID: 11400000, guid: a41fdb2be75e8f44c94ac2f940b26209, type: 2}
   hackDeck:
   - {fileID: 11400000, guid: 441fafb4da5a15f4b95e33b621555061, type: 2}
   - {fileID: 11400000, guid: 441fafb4da5a15f4b95e33b621555061, type: 2}
